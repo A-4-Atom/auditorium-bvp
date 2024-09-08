@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const pool = require("./db");
-
+const handler = require("./db");
+require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
@@ -10,6 +10,8 @@ app.use(express.json());
 app.get("/", async (req, res) => {
   res.json({ name: "vikas" });
 });
+
+app.get("/invoices", handler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

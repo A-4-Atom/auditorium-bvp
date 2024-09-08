@@ -1,12 +1,12 @@
-const Pool = require("pg").Pool;
-require("dotenv").config();
+const { sql } = require("@vercel/postgres");
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  user: process.env.DB_PASSWORD,
-  user: process.env.DB_HOST,
-  user: process.env.DB_PORT,
-  user: process.env.DB_NAME,
-});
+async function handler(req, res) {
+  try {
+    const result = await sql`SELECT * FROM invoices`;
+    res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
 
-module.exports = pool;
+module.exports = handler;
